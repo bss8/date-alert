@@ -1,10 +1,12 @@
 package com.simplyatx.datealert
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -35,5 +37,18 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    val sendIntent: Intent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_TEXT, "!DATE ALERT! - Going on a date today - !DATE ALERT!")
+        type = "text/plain"
+    }
+
+    fun sendAlert(view: View) {
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
+        Snackbar.make(view, "Preparing message to send", Snackbar.LENGTH_LONG)
+            .setAction("Action", null).show()
     }
 }
